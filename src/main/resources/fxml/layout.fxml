@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:id="rootPane"
+            fx:controller="org.cruise.controller.NavbarController">
+
+    <!-- Top Navbar -->
+    <top>
+        <HBox spacing="10" style="-fx-padding: 10; -fx-background-color: #2c3e50;">
+            <children>
+                <Button text="Cashier" onAction="#switchToCashierView" />
+                <Button text="Passenger" onAction="#switchToPassengerView" />
+                <Button text="Ticket" onAction="#switchToTicketView" />
+            </children>
+        </HBox>
+    </top>
+
+    <!-- Center Content (Dynamic Content for Forms/Tables) -->
+    <center>
+        <StackPane fx:id="dynamicContent"
+                   style="-fx-padding: 10;">
+        </StackPane>
+    </center>
+</BorderPane>

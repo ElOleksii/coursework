@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.cruise.controller.CashierController"
+      spacing="10">
+    <children>
+        <Label text="Cashier Management" style="-fx-font-size: 18px;" />
+
+        <HBox spacing="10">
+            <TextField fx:id="cashierNameField" promptText="Enter Cashier Name" />
+            <TextField fx:id="cashierPhoneNumberField" promptText="Enter Phone Number" />
+            <TextField fx:id="cashierOrganizationField" promptText="Enter Organization Name" />
+            <CheckBox fx:id="cashierShiftCheckBox" text="Day Shift" />
+            <Button text="Add Cashier" onAction="#addCashier" />
+        </HBox>
+
+        <TableView fx:id="cashierTable">
+            <columns>
+
+            </columns>
+        </TableView>
+    </children>
+</VBox>
