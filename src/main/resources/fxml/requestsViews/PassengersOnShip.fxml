@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.cruise.controller.request.PassengerCountOnShipController"
+            style="-fx-padding: 10;">
+
+    <!-- Заголовок вікна -->
+    <top>
+        <Label text="Passengers on Ship" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 10;" />
+    </top>
+
+    <!-- Центральна частина вікна для введення судна і відображення кількості пасажирів -->
+    <center>
+        <VBox spacing="20" alignment="TOP_LEFT">
+            <HBox spacing="10" alignment="BASELINE_LEFT">
+                <Label text="Enter Ship Name:" style="-fx-font-size: 16px;" />
+                <TextField fx:id="shipNameField" promptText="Ship Name" />
+                <Button text="Search" onAction="#getPassengerCountOnShip" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px;" />
+            </HBox>
+            <HBox spacing="10" alignment="BASELINE_LEFT">
+                <Label fx:id="passengerCountTitleLabel" text="Number of Passengers on Ship:" style="-fx-font-size: 16px;" visible="false" />
+                <Label fx:id="passengerCountLabel" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

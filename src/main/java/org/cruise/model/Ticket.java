@@ -20,6 +20,9 @@ public class Ticket {
         this.price = price;
     }
 
+    public Ticket(){
+    }
+
     public int getTicketId() {
         return ticketId;
     }

@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -12,12 +13,16 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         // Load the FXML file
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/layout.fxml"));
-        Parent root = loader.load();  // Corrected line: you need to use the loaded root object
+        Parent root = loader.load();  // Завантажуємо коректно root з FXML
 
         // Create scene using the root loaded from the FXML
-        Scene scene = new Scene(root, 800, 600);  // Use 'root' here instead of fxmlLoader.load()
+        Scene scene = new Scene(root, 800, 600);
+        scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
 
-        // Set up the primary stage
+        // Load and set the icon
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/icon.png")));
+
+        // Set the stage properties
         primaryStage.setTitle("Cruise Management System");
         primaryStage.setScene(scene);
         primaryStage.show();

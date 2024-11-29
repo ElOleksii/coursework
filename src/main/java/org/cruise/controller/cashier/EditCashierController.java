@@ -1,4 +1,4 @@
-package org.cruise.controller;
+package org.cruise.controller.cashier;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -18,19 +18,22 @@ public class EditCashierController {
     @FXML
     private CheckBox shiftCheckBox;
 
-    public EditCashierController(Cashier cashier) {
-        this.cashier = cashier;
-    }
-    
 
     @FXML
-    private void initialize() {
-        // Initialize fields with the current values from the selected cashier
-        fullNameField.setText(cashier.getFullName());
-        phoneNumberField.setText(cashier.getPhoneNumber());
-        organizationField.setText(cashier.getOrganizationName());
-        shiftCheckBox.setSelected(cashier.isShift()); // True for Day shift, False for Night shift
+    public void initialize() {
+        if (cashier != null) {
+            System.out.println("Full Name: " + cashier.getFullName());
+        } else {
+            System.out.println("Cashier object is null.");
+        }
     }
+
+    public void setCashier(Cashier cashier) {
+        this.cashier = cashier;
+    }
+
+
+
 
 
     @FXML

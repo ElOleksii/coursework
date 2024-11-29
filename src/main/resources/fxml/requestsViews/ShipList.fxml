@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.cruise.controller.request.ShipListController"
+            style="-fx-padding: 10;">
+
+    <!-- Заголовок вікна -->
+    <top>
+        <Label text="Ship List" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 10;" />
+    </top>
+
+    <!-- Центральна частина вікна для відображення списку суден і кількості пасажирів -->
+    <center>
+        <TableView fx:id="shipTable" prefWidth="600">
+            <columns>
+                <TableColumn fx:id="shipNameColumn" text="Ship Name" prefWidth="300" />
+                <TableColumn fx:id="passengerCountColumn" text="Passenger Count" prefWidth="300" />
+            </columns>
+        </TableView>
+    </center>
+
+</BorderPane>

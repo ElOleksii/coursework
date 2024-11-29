@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.cruise.controller.request.TotalRevenueController"
+            style="-fx-padding: 10;">
+
+    <!-- Заголовок вікна -->
+    <top>
+        <Label text="Total Revenue from Tickets" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 10;" />
+    </top>
+
+    <center>
+        <VBox spacing="20" alignment="BASELINE_LEFT">
+            <HBox spacing="10" alignment="BASELINE_LEFT">
+                <Label text="Total Revenue:" style="-fx-font-size: 16px;" />
+                <Label fx:id="totalRevenueLabel" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

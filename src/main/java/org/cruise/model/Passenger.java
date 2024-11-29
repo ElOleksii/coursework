@@ -10,6 +10,8 @@ public class Passenger extends Person {
         this.ticketId = ticketId;
     }
 
+    public Passenger() {}
+
     public String getAddress() {
         return address;
     }

@@ -5,20 +5,38 @@
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:id="rootPane"
-            fx:controller="org.cruise.controller.NavbarController">
+            fx:controller="org.cruise.controller.MenuController"
+            stylesheets="@/styles/style.css">
+
+
 
     <!-- Top Navbar -->
     <top>
-        <HBox spacing="10" style="-fx-padding: 10; -fx-background-color: #2c3e50;">
+        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10; -fx-background-color: #2c3e50;">
             <children>
-                <Button text="Cashier" onAction="#switchToCashierView" />
-                <Button text="Passenger" onAction="#switchToPassengerView" />
-                <Button text="Ticket" onAction="#switchToTicketView" />
+                <!-- Основні розділи меню -->
+                <MenuButton text="Create Objects" styleClass="menu-button">
+                    <items>
+                        <MenuItem text="Create Cashier" onAction="#switchToCashierView"/>
+                        <MenuItem text="Create Passenger" onAction="#switchToPassengerView"/>
+                        <MenuItem text="Create Ticket" onAction="#switchToTicketView"/>
+                    </items>
+                </MenuButton>
+                <MenuButton text="System Queries" styleClass="menu-button">
+                    <items>
+                        <MenuItem text="Total Passengers" onAction="#showTotalPassengers"/>
+                        <MenuItem text="Passengers on Ship" onAction="#showPassengersOnShip"/>
+                        <MenuItem text="Ship List" onAction="#showShipList"/>
+                        <MenuItem text="Popular Cabin Class" onAction="#showPopularCabinClass"/>
+                        <MenuItem text="Total Revenue" onAction="#showTotalRevenue"/>
+                        <MenuItem text="Popular Arrival Port" onAction="#showPopularArrivalPort"/>
+                    </items>
+                </MenuButton>
             </children>
         </HBox>
     </top>
 
-    <!-- Center Content (Dynamic Content for Forms/Tables) -->
+    <!-- Центральний контент (Динамічний контент для форм/таблиць) -->
     <center>
         <StackPane fx:id="dynamicContent"
                    style="-fx-padding: 10;">

@@ -9,6 +9,10 @@ public abstract class Person {
         this.phoneNumber = phoneNumber;
     }
 
+    public Person() {
+
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }

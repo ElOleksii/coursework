@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="fxml.CreateObjectsViews.TicketView"
-            prefHeight="400.0" prefWidth="600.0">
+<?import java.lang.String?>
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.cruise.controller.ticket.TicketController" spacing="10" alignment="TOP_LEFT" prefWidth="800">
+    <!-- Title -->
+    <Label text="Ticket Management" style="-fx-font-size: 18px;" />
+    <!-- Input Fields -->
+    <GridPane hgap="10" vgap="10" alignment="TOP_LEFT">
+        <Label text="Ship Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="ticketShipNameField" promptText="Enter Ship Name" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-</AnchorPane>
+        <Label text="Departure Port:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="ticketDeparturePortField" promptText="Enter Departure Port" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Arrival Port:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <TextField fx:id="ticketArrivalPortField" promptText="Enter Arrival Port" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Date:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="ticketDatePicker" promptText="Select Date" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Price:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <TextField fx:id="ticketPriceField" promptText="Enter Price" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+        <Label text="Class:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="ticketCabinClassField" promptText="Select Class" GridPane.rowIndex="5" GridPane.columnIndex="1">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Economy" />
+                    <String fx:value="Business" />
+                    <String fx:value="First" />
+                </FXCollections>
+            </items>
+        </ComboBox>
+    </GridPane>
+
+    <!-- Buttons -->
+    <HBox spacing="20" alignment="CENTER">
+        <Button fx:id="addTicketButton" text="Add Ticket" onAction="#addTicket" />
+    </HBox>
+
+    <!-- Table -->
+    <TableView fx:id="ticketTable" prefHeight="400" prefWidth="780">
+        <columns>
+            <!-- Define table columns here as needed -->
+        </columns>
+    </TableView>
+</VBox>

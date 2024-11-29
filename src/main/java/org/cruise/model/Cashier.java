@@ -10,7 +10,8 @@ public class Cashier extends Person {
         this.shift = shift;
     }
 
-
+    public Cashier() {
+    }
 
     public String getOrganizationName() {
         return organizationName;
