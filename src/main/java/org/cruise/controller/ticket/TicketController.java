@@ -134,7 +134,7 @@ public class TicketController extends ObjectControllerTemplate<Ticket> {
 
         // Validate input fields
         if (shipName.isEmpty() || departurePort.isEmpty() || arrivalPort.isEmpty() || cabinClass.isEmpty() || priceText.isEmpty()) {
-            System.out.println("Error: All fields are required.");
+            showAlert("Input Error", "All fields are required.");
             return;
         }
 

@@ -116,7 +116,7 @@ public class PassengerController extends ObjectControllerTemplate<Passenger> {
 
         // Validate input and add Passenger
         if (fullName.isEmpty() || phoneNumber.isEmpty() || address.isEmpty()) {
-            System.out.println("Error: All fields are required.");
+            showAlert("Input Error", "All fields are required.");
             return;
         }
 

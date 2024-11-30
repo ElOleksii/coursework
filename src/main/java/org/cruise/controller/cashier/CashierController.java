@@ -107,8 +107,8 @@ public class CashierController extends ObjectControllerTemplate<Cashier> {
         boolean shift = cashierShiftCheckBox.isSelected();
 
         // Validate input fields
-        if (fullName.isEmpty() || organizationName.isEmpty()) {
-            System.out.println("Error: All fields are required.");
+        if (fullName.isEmpty() || organizationName.isEmpty() || phoneNumber.isEmpty()) {
+            showAlert("Input Error", "All fields are required.");
             return;
         }
         if (!ValidationService.isValidPhoneNumber(cashierPhoneNumberField, "Phone Number")) {
