@@ -8,6 +8,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MenuController {
 
@@ -20,12 +22,16 @@ public class MenuController {
     @FXML
     private Button burgerMenuButton; // Кнопка меню-бургер
 
-    private boolean isNavBarCollapsed = true; // Спочатку меню згорнуте
+    private boolean isNavBarCollapsed = true;
 
+    private Map<String, Node> views = new HashMap<>();
 
 
     @FXML
     protected void initialize() {
+        preloadView("/fxml/CreateObjectsViews/cashierView.fxml", "cashierView");
+        preloadView("/fxml/CreateObjectsViews/passengerView.fxml", "passengerView");
+        preloadView("/fxml/CreateObjectsViews/ticketView.fxml", "ticketView");
         loadView("/fxml/HomeView.fxml"); // Завантажуємо початковий вигляд Home
     }
 
@@ -35,6 +41,15 @@ public class MenuController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Node view = loader.load();
             dynamicContent.getChildren().setAll(view); // Заміна поточного вигляду новим
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void preloadView(String fxmlFile, String viewKey) {
+        try {
+            Node view = FXMLLoader.load(getClass().getResource(fxmlFile));
+            views.put(viewKey, view);
         } catch (IOException e) {
             e.printStackTrace();
         }
