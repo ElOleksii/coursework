@@ -22,6 +22,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static org.cruise.service.ErrorHandler.showAlert;
+
 public class TicketController extends ObjectControllerTemplate<Ticket> {
 
     @FXML
@@ -124,7 +126,11 @@ public class TicketController extends ObjectControllerTemplate<Ticket> {
         String cabinClass = ticketCabinClassField.getValue();
         String priceText = ticketPriceField.getText().trim();
 
-        // Check if the date picker is null or empty
+
+        if (shipName.isEmpty() || departurePort.isEmpty() || arrivalPort.isEmpty() || cabinClass.isEmpty() || priceText.isEmpty()) {
+            showAlert("Input Error", "All fields are required.");
+            return;
+        }
         if (ticketDatePicker.getValue() == null) {
             System.out.println("Error: Date is required.");
             return;
@@ -133,10 +139,7 @@ public class TicketController extends ObjectControllerTemplate<Ticket> {
         Date date = java.sql.Date.valueOf(ticketDatePicker.getValue());
 
         // Validate input fields
-        if (shipName.isEmpty() || departurePort.isEmpty() || arrivalPort.isEmpty() || cabinClass.isEmpty() || priceText.isEmpty()) {
-            showAlert("Input Error", "All fields are required.");
-            return;
-        }
+
 
         float price;
         try {

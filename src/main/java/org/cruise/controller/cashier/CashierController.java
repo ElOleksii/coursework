@@ -12,11 +12,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.cruise.controller.template.ObjectControllerTemplate;
 import org.cruise.model.Cashier;
-import org.cruise.service.FileManagement;
+
 import org.cruise.service.ValidationService;
+
 
 import java.io.IOException;
 import java.util.List;
+
+import static org.cruise.service.ErrorHandler.showAlert;
 
 public class CashierController extends ObjectControllerTemplate<Cashier> {
 

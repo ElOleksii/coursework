@@ -19,6 +19,8 @@ import org.cruise.service.FileManagement;
 import java.io.IOException;
 import java.util.List;
 
+import static org.cruise.service.ErrorHandler.showAlert;
+
 public class PassengerController extends ObjectControllerTemplate<Passenger> {
 
     // FXML fields for input
@@ -107,6 +109,12 @@ public class PassengerController extends ObjectControllerTemplate<Passenger> {
         String phoneNumber = passengerPhoneNumberField.getText().trim();
         String address = passengerAddressField.getText().trim();
         int ticketId;
+
+        if (fullName.isEmpty() || phoneNumber.isEmpty() || address.isEmpty()) {
+            showAlert("Input Error", "All fields are required.");
+            return;
+        }
+        
         try {
             ticketId = Integer.parseInt(passengerTicketIdField.getText().trim());
         } catch (NumberFormatException e) {
@@ -114,11 +122,7 @@ public class PassengerController extends ObjectControllerTemplate<Passenger> {
             return;
         }
 
-        // Validate input and add Passenger
-        if (fullName.isEmpty() || phoneNumber.isEmpty() || address.isEmpty()) {
-            showAlert("Input Error", "All fields are required.");
-            return;
-        }
+
 
         // Create the new Passenger object
         Passenger newPassenger = new Passenger(fullName, phoneNumber, address, ticketId);
