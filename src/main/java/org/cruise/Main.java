@@ -16,10 +16,11 @@ public class Main extends Application {
         Parent root = loader.load();  // Завантажуємо коректно root з FXML
 
         // Create scene using the root loaded from the FXML
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
 
         // Load and set the icon
+        primaryStage.setMaximized(true);
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/icon.png")));
 
         // Set the stage properties

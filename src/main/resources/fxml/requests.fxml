@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+
+<?import java.lang.String?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.cruise.controller.RequestController"
+            style="-fx-padding: 20; -fx-background-color: #f9f9f9;">
+
+    <!-- Верхній заголовок -->
+    <top>
+        <Label text="System Requests" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 10;" />
+    </top>
+
+    <!-- Центральний контент -->
+    <center>
+        <VBox spacing="15" alignment="TOP_LEFT">
+            <children>
+                <!-- Панель вибору запиту -->
+                <HBox spacing="10">
+                    <ComboBox fx:id="requestSelector" promptText="Select Request" prefWidth="250">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Total Passengers"/>
+                                <String fx:value="Passengers on Ship"/>
+                                <String fx:value="Ship List"/>
+                                <String fx:value="Popular Cabin Class"/>
+                                <String fx:value="Total Revenue"/>
+                                <String fx:value="Popular Arrival Port"/>
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                    <Button text="Get Request" onAction="#handleGetRequest" style="-fx-background-color: #2980b9; -fx-text-fill: white;"/>
+                </HBox>
+
+                <!-- Результати запиту -->
+                <TextArea fx:id="requestResultArea"
+                          promptText="Request Results will be displayed here..."
+                          editable="false"
+                          wrapText="true"
+                          prefWidth="600" prefHeight="200"/>
+            </children>
+        </VBox>
+    </center>
+
+</BorderPane>

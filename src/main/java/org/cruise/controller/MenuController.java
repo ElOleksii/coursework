@@ -1,24 +1,54 @@
 package org.cruise.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-
 
 public class MenuController {
 
     @FXML
-    protected void initialize() {
-        loadView("/fxml/HomeView.fxml");
-    }
+    private StackPane dynamicContent; // Контейнер для динамічного контенту
 
     @FXML
-    private StackPane dynamicContent; // Container for dynamic views
+    private VBox sideNavBar; // Ліве бокове меню
 
+    @FXML
+    private Button burgerMenuButton; // Кнопка меню-бургер
+
+    private boolean isNavBarCollapsed = true; // Спочатку меню згорнуте
+
+
+
+    @FXML
+    protected void initialize() {
+        loadView("/fxml/HomeView.fxml"); // Завантажуємо початковий вигляд Home
+    }
+
+    // Метод для завантаження конкретного вигляду
+    private void loadView(String fxmlFile) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Node view = loader.load();
+            dynamicContent.getChildren().setAll(view); // Заміна поточного вигляду новим
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Метод для згортання/розгортання бокового меню
+    @FXML
+    private void toggleNavBar() {
+        boolean isVisible = sideNavBar.isVisible();
+        sideNavBar.setVisible(!isVisible);
+        sideNavBar.setManaged(!isVisible);
+    }
+
+    // Методи для завантаження конкретних виглядів, прив'язаних до кнопок у меню
     @FXML
     private void switchToCashierView() {
         loadView("/fxml/CreateObjectsViews/cashierView.fxml");
@@ -34,38 +64,38 @@ public class MenuController {
         loadView("/fxml/CreateObjectsViews/ticketView.fxml");
     }
 
-    private void loadView(String fxmlFile) {
-        try {
-            Node view = FXMLLoader.load(getClass().getResource(fxmlFile));
-            dynamicContent.getChildren().setAll(view); // Replace current view
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
-    public void showTotalPassengers() {
+    private void showTotalPassengers() {
         loadView("/fxml/requestsViews/TotalPassengers.fxml");
     }
 
-    public void showPassengersOnShip() {
+    @FXML
+    private void showPassengersOnShip() {
         loadView("/fxml/requestsViews/PassengersOnShip.fxml");
     }
 
-    public void showShipList() {
+    @FXML
+    private void showShipList() {
         loadView("/fxml/requestsViews/ShipList.fxml");
     }
 
-    public void showPopularCabinClass() {
+    @FXML
+    private void showPopularCabinClass() {
         loadView("/fxml/requestsViews/MostPopularCabinClass.fxml");
     }
 
-    public void showTotalRevenue() {
+    @FXML
+    private void showTotalRevenue() {
         loadView("/fxml/requestsViews/TotalRevenue.fxml");
     }
 
-    public void showPopularArrivalPort() {
+    @FXML
+    private void showPopularArrivalPort() {
         loadView("/fxml/requestsViews/MostPopularPort.fxml");
+    }
 
+    @FXML
+    private void showAllRequest() {
+        loadView("/fxml/requests.fxml");
     }
 }
