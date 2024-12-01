@@ -3,6 +3,8 @@ package org.cruise.service;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
+import static org.cruise.service.ErrorHandler.showAlert;
+
 public class ValidationService {
 
     // Метод для перевірки, що текстове поле містить лише числа і значення в діапазоні
@@ -29,7 +31,6 @@ public class ValidationService {
         }
     }
 
-    // Метод для перевірки, що текстове поле містить правильний номер телефону
     public static boolean isValidPhoneNumber(TextField inputField, String fieldName) {
         String input = inputField.getText().trim();
         if (input == null || input.isEmpty()) {
@@ -47,13 +48,46 @@ public class ValidationService {
         return true;
     }
 
+    public static boolean arePortsDifferent(TextField departurePortField, TextField arrivalPortField) {
+        String departurePort = departurePortField.getText().trim();
+        String arrivalPort = arrivalPortField.getText().trim();
 
-    // Метод для показу повідомлення з помилкою
-    private static void showAlert(String title, String message, Alert.AlertType alertType) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        // Перевірка, що обидва поля не є порожніми
+        if (departurePort.isEmpty() || arrivalPort.isEmpty()) {
+            showAlert("Validation Error", "Both Departure Port and Arrival Port must be provided.", Alert.AlertType.ERROR);
+            departurePortField.setStyle("-fx-border-color: red;");
+            arrivalPortField.setStyle("-fx-border-color: red;");
+            return false;
+        }
+
+        if (departurePort.equalsIgnoreCase(arrivalPort)) {
+            showAlert("Validation Error", "Departure Port and Arrival Port cannot be the same.", Alert.AlertType.ERROR);
+            departurePortField.setStyle("-fx-border-color: red;");
+            arrivalPortField.setStyle("-fx-border-color: red;");
+            return false;
+        }
+
+        // Якщо валідація пройшла успішно, скидаємо стилі
+        departurePortField.setStyle("-fx-border-color: transparent;");
+        arrivalPortField.setStyle("-fx-border-color: transparent;");
+        return true;
     }
+
+    public static boolean isValidStringLength(TextField inputField, String fieldName, int maxLength) {
+        String input = inputField.getText().trim();
+        if (input == null || input.isEmpty()) {
+            showAlert("Validation Error", fieldName + " cannot be empty.", Alert.AlertType.ERROR);
+            inputField.setStyle("-fx-border-color: red;");
+            return false;
+        }
+        if (input.length() > maxLength) {
+            showAlert("Validation Error", fieldName + " cannot exceed " + maxLength + " characters.", Alert.AlertType.ERROR);
+            inputField.setStyle("-fx-border-color: red;");
+            return false;
+        }
+        inputField.setStyle(null);  // Якщо все вірно, очищаємо стиль
+        return true;
+    }
+
+
 }

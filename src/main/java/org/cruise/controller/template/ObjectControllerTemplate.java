@@ -1,4 +1,5 @@
 package org.cruise.controller.template;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
@@ -27,15 +28,12 @@ public abstract class ObjectControllerTemplate<T> {
         bindDataToTable();
     }
 
-
     private void loadData() {
         List<T> loadedData = FileManagement.loadFromFile(filePath, getTypeReference());
         dataList.addAll(loadedData);
     }
 
-
     protected abstract void setupTableColumns();
-
 
     private void setupContextMenu() {
         ContextMenu contextMenu = new ContextMenu();
@@ -61,17 +59,13 @@ public abstract class ObjectControllerTemplate<T> {
         });
     }
 
-
     private void bindDataToTable() {
         tableView.setItems(dataList);
     }
 
-
     protected abstract void openEditWindow();
 
-
     protected abstract TypeReference<List<T>> getTypeReference();
-
 
     private void deleteItem() {
         T selectedItem = tableView.getSelectionModel().getSelectedItem();
@@ -81,10 +75,18 @@ public abstract class ObjectControllerTemplate<T> {
         }
     }
 
-
     protected void addItem(T item) {
         dataList.add(item);
         FileManagement.saveToFile(dataList, filePath);
     }
+
+    public void updateItem(T updatedItem) {
+        int index = dataList.indexOf(updatedItem);
+        if (index != -1) {
+            dataList.set(index, updatedItem);
+            FileManagement.saveToFile(dataList, filePath);
+        }
+    }
+
 
 }

@@ -11,8 +11,8 @@
     <top>
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10; -fx-background-color: #2c3e50;">
             <children>
-                <Button fx:id="burgerMenuButton" text="☰" onAction="#toggleNavBar"
-                        styleClass="toggle-button"
+                <Button prefWidth="50"  fx:id="burgerMenuButton" text="☰" onAction="#toggleNavBar"
+                        styleClass="menu-button"
                         style="-fx-background-color: #2980b9; -fx-text-fill: white; -fx-font-size: 18px;"/>
                 <Label text="Cruise Management System" style="-fx-font-size: 18px; -fx-text-fill: white;"/>
             </children>
@@ -28,13 +28,7 @@
                 <Button text="Manage Cashier" onAction="#switchToCashierView" styleClass="nav-button"/>
                 <Button text="Manage Passenger" onAction="#switchToPassengerView" styleClass="nav-button"/>
                 <Button text="Manage Ticket" onAction="#switchToTicketView" styleClass="nav-button"/>
-                <Button text="Total Passengers" onAction="#showTotalPassengers" styleClass="nav-button"/>
-                <Button text="Passengers on Ship" onAction="#showPassengersOnShip" styleClass="nav-button"/>
-                <Button text="Ship List" onAction="#showShipList" styleClass="nav-button"/>
-                <Button text="Popular Cabin Class" onAction="#showPopularCabinClass" styleClass="nav-button"/>
-                <Button text="Total Revenue" onAction="#showTotalRevenue" styleClass="nav-button"/>
-                <Button text="Popular Arrival Port" onAction="#showPopularArrivalPort" styleClass="nav-button"/>
-                <Button text="Requests" onAction="#showAllRequest" styleClass="nav-button"/>
+                <Button text="System Requests" onAction="#showAllRequest" styleClass="nav-button"/>
             </children>
         </VBox>
     </left>

@@ -4,8 +4,7 @@ import java.util.Date;
 public class Ticket {
     protected int ticketId;
     protected String shipName;
-    protected String departurePort;
-    protected String arrivalPort;
+    protected Way way;
     protected Date date;
     protected String cabinClass;
     protected float price;
@@ -13,8 +12,7 @@ public class Ticket {
     public Ticket(int ticketId, String shipName, String departurePort, String arrivalPort, Date date, String cabinClass, float price) {
         this.ticketId = ticketId;
         this.shipName = shipName;
-        this.departurePort = departurePort;
-        this.arrivalPort = arrivalPort;
+        this.way = new Way(departurePort, arrivalPort);
         this.date = date;
         this.cabinClass = cabinClass;
         this.price = price;
@@ -39,20 +37,11 @@ public class Ticket {
         this.shipName = shipName;
     }
 
-    public String getDeparturePort() {
-        return departurePort;
+    public Way getWay() {
+        return way;
     }
-
-    public void setDeparturePort(String departurePort) {
-        this.departurePort = departurePort;
-    }
-
-    public String getArrivalPort() {
-        return arrivalPort;
-    }
-
-    public void setArrivalPort(String arrivalPort) {
-        this.arrivalPort = arrivalPort;
+    public void setWay(Way way) {
+        this.way = way;
     }
 
     public Date getDate() {
@@ -78,4 +67,6 @@ public class Ticket {
     public void setPrice(float price) {
         this.price = price;
     }
+
+
 }

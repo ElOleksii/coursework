@@ -2,6 +2,7 @@ package org.cruise.controller.cashier;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +16,6 @@ import org.cruise.model.Cashier;
 
 import org.cruise.service.ValidationService;
 
-
 import java.io.IOException;
 import java.util.List;
 
@@ -23,7 +23,6 @@ import static org.cruise.service.ErrorHandler.showAlert;
 
 public class CashierController extends ObjectControllerTemplate<Cashier> {
 
-    // FXML fields for input
     @FXML
     private TextField cashierNameField;
     @FXML
@@ -40,11 +39,11 @@ public class CashierController extends ObjectControllerTemplate<Cashier> {
 
     @FXML
     protected void initialize() {
-        super.filePath = this.filePath;  // Передаємо шлях до файлу в базовий клас
-        super.tableView = this.cashierTable;  // Передаємо таблицю в базовий клас
-        super.dataList = FXCollections.observableArrayList();  // Ініціалізація списку об'єктів
+        super.filePath = this.filePath;  // Set file path for the base class
+        super.tableView = this.cashierTable;  // Set the table view for the base class
+        super.dataList = FXCollections.observableArrayList();  // Initialize the list of objects
 
-        super.initialize();  // Викликаємо базовий метод ініціалізації
+        super.initialize();  // Call base class initialization
     }
 
     @Override
@@ -61,31 +60,29 @@ public class CashierController extends ObjectControllerTemplate<Cashier> {
         organizationColumn.setCellValueFactory(new PropertyValueFactory<>("organizationName"));
         organizationColumn.setPrefWidth(200);
 
-        TableColumn<Cashier, Boolean> shiftColumn = new TableColumn<>("Shift");
-        shiftColumn.setCellValueFactory(cellData -> new SimpleBooleanProperty(cellData.getValue().isShift()).asObject());
+        TableColumn<Cashier, String> shiftColumn = new TableColumn<>("Shift");
+        shiftColumn.setCellValueFactory(cellData -> {
+            boolean isShift = cellData.getValue().isShift();
+            return new SimpleStringProperty(isShift ? "Yes" : "No");
+        });
         shiftColumn.setPrefWidth(200);
 
-        // Add columns to the table
         tableView.getColumns().addAll(fullNameColumn, phoneNumberColumn, organizationColumn, shiftColumn);
     }
 
+
     @Override
     protected void openEditWindow() {
-        // Get the selected cashier
         Cashier selectedCashier = tableView.getSelectionModel().getSelectedItem();
         if (selectedCashier != null) {
             try {
-                // Load the EditCashier.fxml file
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CreateObjectsViews/editCashier.fxml"));
-                Stage stage = new Stage();
-                stage.setTitle("Edit Cashier");
-
-                // Load the FXML and set the controller's cashier via the setter method
                 Parent root = loader.load();
                 EditCashierController controller = loader.getController();
-                controller.setCashier(selectedCashier);
+                controller.setObjectToEdit(selectedCashier, this);
 
-                // Set the scene and show the stage
+                Stage stage = new Stage();
+                stage.setTitle("Edit Cashier");
                 stage.setScene(new Scene(root));
                 stage.showAndWait();
             } catch (IOException e) {
@@ -103,31 +100,38 @@ public class CashierController extends ObjectControllerTemplate<Cashier> {
 
     @FXML
     private void addCashier() {
-        // Get values from input fields using their fx:id
+        if (!ValidationService.isValidStringLength(cashierNameField, "Cashier Name", 30) ||
+                !ValidationService.isValidStringLength(cashierOrganizationField, "Organization Name", 30)) {
+            return;
+        }
         String fullName = cashierNameField.getText().trim();
         String phoneNumber = cashierPhoneNumberField.getText().trim();
         String organizationName = cashierOrganizationField.getText().trim();
         boolean shift = cashierShiftCheckBox.isSelected();
 
-        // Validate input fields
         if (fullName.isEmpty() || organizationName.isEmpty() || phoneNumber.isEmpty()) {
-            showAlert("Input Error", "All fields are required.");
+            showAlert("Input Error", "All fields are required.", Alert.AlertType.ERROR);
             return;
         }
         if (!ValidationService.isValidPhoneNumber(cashierPhoneNumberField, "Phone Number")) {
             return;
         }
 
-        // Create the new Cashier object
         Cashier newCashier = new Cashier(fullName, phoneNumber, organizationName, shift);
 
-        // Use the inherited addItem method to add cashier and save to file
         addItem(newCashier);
 
-        // Clear input fields
         cashierNameField.clear();
         cashierPhoneNumberField.clear();
         cashierOrganizationField.clear();
         cashierShiftCheckBox.setSelected(false);
+    }
+
+    public void updateItem(Cashier updatedCashier) {
+        int index = dataList.indexOf(updatedCashier);
+        if (index >= 0) {
+            dataList.set(index, updatedCashier);
+            tableView.refresh();
+        }
     }
 }

@@ -79,35 +79,6 @@ public class MenuController {
         loadView("/fxml/CreateObjectsViews/ticketView.fxml");
     }
 
-    @FXML
-    private void showTotalPassengers() {
-        loadView("/fxml/requestsViews/TotalPassengers.fxml");
-    }
-
-    @FXML
-    private void showPassengersOnShip() {
-        loadView("/fxml/requestsViews/PassengersOnShip.fxml");
-    }
-
-    @FXML
-    private void showShipList() {
-        loadView("/fxml/requestsViews/ShipList.fxml");
-    }
-
-    @FXML
-    private void showPopularCabinClass() {
-        loadView("/fxml/requestsViews/MostPopularCabinClass.fxml");
-    }
-
-    @FXML
-    private void showTotalRevenue() {
-        loadView("/fxml/requestsViews/TotalRevenue.fxml");
-    }
-
-    @FXML
-    private void showPopularArrivalPort() {
-        loadView("/fxml/requestsViews/MostPopularPort.fxml");
-    }
 
     @FXML
     private void showAllRequest() {

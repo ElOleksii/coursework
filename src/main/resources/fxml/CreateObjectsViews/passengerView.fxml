@@ -13,7 +13,7 @@
             <TextField fx:id="passengerNameField" promptText="Enter Passenger Name" />
             <TextField fx:id="passengerPhoneNumberField" promptText="Enter Phone Number" />
             <TextField fx:id="passengerAddressField" promptText="Enter address" />
-            <TextField fx:id="passengerTicketIdField" promptText="Enter ticket id" />
+            <ComboBox fx:id="passengerTicketIdComboBox" promptText="Select ticket id" />
             <Button text="Add Passenger" onAction="#addPassenger" />
         </HBox>
 

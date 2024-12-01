@@ -1,8 +1,70 @@
+
+
+.text-field, .combo-box, .check-box, .button {
+    -fx-padding: 2px 4px;
+    -fx-font-size: 14px;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px; /* Ширина рамки */
+    -fx-background-radius: 5px; /* Заокруглення заднього фону */
+    -fx-border-radius: 5px; /* Заокруглення рамки */
+    -fx-pref-height: 40px; /* Установка однакової висоти */
+    -fx-alignment: CENTER_LEFT; /* Вирівнювання контенту зліва */
+}
+
+/* Для текстових полів і випадаючих списків */
+.text-field, .combo-box {
+    -fx-background-color: #ffffff; /* Колір фону */
+    -fx-pref-height: 40px; /* Однакова висота */
+}
+
+/* Для кнопок */
+.button {
+    -fx-background-color: #3498db; /* Фон */
+    -fx-text-fill: white; /* Колір тексту */
+    -fx-background-radius: 5px; /* Заокруглення фону */
+    -fx-border-color: transparent; /* Прозора рамка */
+    -fx-font-weight: bold; /* Жирний шрифт */
+    -fx-pref-height: 40px; /* Однакова висота */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 3, 0.5, 0, 1); /* Тінь */
+    -fx-cursor: hand; /* Стиль курсора */
+}
+
+/* При наведенні на кнопку */
+.button:hover {
+    -fx-background-color: #2980b9; /* Темніший фон при наведенні */
+}
+
+/* При натисканні на кнопку */
+.button:pressed {
+    -fx-background-color: #1e6a8a; /* Ще темніший фон при натисканні */
+}
+
+/* Стиль для CheckBox */
+.check-box {
+    -fx-text-fill: #333333; /* Колір тексту */
+    -fx-padding: 0 10px; /* Внутрішній відступ для вирівнювання */
+    -fx-pref-height: 40px; /* Однакова висота */
+}
+
+/* Оформлення контейнера з фоном */
+.check-box .box {
+    -fx-border-color: #3498db;
+    -fx-background-color: #ffffff;
+}
+
+/* Коли CheckBox активний */
+.check-box:checked .box {
+    -fx-background-color: #3498db;
+    -fx-border-color: #3498db;
+}
+
+/* Сайдбар і кнопки в ньому */
 .side-nav {
     -fx-background-color: #2c3e50; /* Темно-синій фон */
     -fx-padding: 15px;
 }
 
+/* Кнопки меню */
 .nav-button {
     -fx-background-color: #2980b9; /* Синій фон для кнопок */
     -fx-text-fill: white; /* Білий колір тексту */
@@ -16,7 +78,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0.0, 0, 3);
     -fx-pref-width: 200px;
     -fx-alignment: CENTER_LEFT;
-
+    -fx-pref-height: 40px; /* Однакова висота */
 }
 
 .nav-button:hover {
@@ -28,6 +90,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.1), 5, 0.0, 0, 1);
 }
 
+/* Кнопка бургер-меню */
 .burger-button {
     -fx-background-color: #1abc9c; /* Морський колір для меню-бургера */
     -fx-text-fill: white;
@@ -36,6 +99,7 @@
     -fx-background-radius: 5px;
     -fx-border-radius: 5px;
     -fx-cursor: hand;
+    -fx-pref-height: 40px; /* Однакова висота */
 }
 
 .burger-button:hover {
@@ -45,10 +109,30 @@
 .burger-button:pressed {
     -fx-background-color: #12876d; /* Ще темніший морський при натисканні */
 }
-
-/* Загальні стилі для кнопок */
-.button {
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 3, 0.5, 0, 1); /* Тінь */
-    -fx-border-width: 0;
+/* Окремий клас для кнопки меню-бургера */
+.menu-button {
+    -fx-background-color: #3498db; /* Синій колір фону */
+    -fx-text-fill: white; /* Білий колір тексту */
+    -fx-font-size: 18px; /* Розмір шрифту */
+    -fx-font-weight: bold; /* Жирний шрифт */
+    -fx-background-radius: 5px; /* Заокруглення фону */
+    -fx-border-radius: 5px; /* Заокруглення рамки */
+    -fx-border-color: transparent; /* Прозора рамка */
     -fx-cursor: hand; /* Стиль курсора */
+    -fx-pref-width: 50px; /* Фіксована ширина */
+    -fx-pref-height: 40px; /* Фіксована висота */
+    -fx-alignment: CENTER; /* Центрування контенту */
+    -fx-padding: 5px; /* Внутрішній відступ для вирівнювання контенту */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 3, 0.5, 0, 1); /* Тінь */
 }
+
+.menu-button:hover {
+    -fx-background-color: #2980b9; /* Темніший синій при наведенні */
+}
+
+.menu-button:pressed {
+    -fx-background-color: #1e6a8a; /* Ще темніший фон при натисканні */
+}
+
+
+

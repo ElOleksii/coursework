@@ -2,13 +2,12 @@ package org.cruise.controller.cashier;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
+import org.cruise.controller.template.EditObjectTemplate;
 import org.cruise.model.Cashier;
 
-public class EditCashierController {
+public class EditCashierController extends EditObjectTemplate<Cashier> {
 
-    private Cashier cashier;
-
+    // FXML Fields for editing Cashier properties
     @FXML
     private TextField fullNameField;
     @FXML
@@ -18,42 +17,47 @@ public class EditCashierController {
     @FXML
     private CheckBox shiftCheckBox;
 
-
-    @FXML
-    public void initialize() {
-        if (cashier != null) {
-            System.out.println("Full Name: " + cashier.getFullName());
+    @Override
+    protected void populateFields() {
+        if (objectToEdit != null) {
+            // Populate the fields with the current data of the cashier
+            fullNameField.setText(objectToEdit.getFullName());
+            phoneNumberField.setText(objectToEdit.getPhoneNumber());
+            organizationField.setText(objectToEdit.getOrganizationName());
+            shiftCheckBox.setSelected(objectToEdit.isShift());
         } else {
             System.out.println("Cashier object is null.");
         }
     }
 
-    public void setCashier(Cashier cashier) {
-        this.cashier = cashier;
+    @Override
+    protected void applyChanges() {
+        if (objectToEdit != null) {
+            // Apply changes to the cashier object
+            objectToEdit.setFullName(fullNameField.getText().trim());
+            objectToEdit.setPhoneNumber(phoneNumberField.getText().trim());
+            objectToEdit.setOrganizationName(organizationField.getText().trim());
+            objectToEdit.setShift(shiftCheckBox.isSelected());
+
+            // Save the changes to the file or list
+            // Assuming `dataList` and `filePath` are accessible from here
+            if (getObjectController() != null) {
+                getObjectController().updateItem(objectToEdit);
+            }
+        } else {
+            System.out.println("Cashier object is null during applyChanges.");
+        }
     }
-
-
-
-
-
-    @FXML
-    private void saveChanges() {
-        // Save changes to the cashier object
-        cashier.setFullName(fullNameField.getText().trim());
-        cashier.setPhoneNumber(phoneNumberField.getText().trim());
-        cashier.setOrganizationName(organizationField.getText().trim());
-        cashier.setShift(shiftCheckBox.isSelected()); // Day (true) or Night (false)
-
-        // Close the edit window
-        Stage stage = (Stage) fullNameField.getScene().getWindow();
-        stage.close();
-    }
-
 
     @FXML
     private void cancel() {
         // Close the edit window without saving changes
-        Stage stage = (Stage) fullNameField.getScene().getWindow();
-        stage.close();
+        closeWindow(fullNameField);
+    }
+
+    @FXML
+    private void saveChanges() {
+        applyChanges();
+        closeWindow(fullNameField);
     }
 }

@@ -19,9 +19,12 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
 
+        
         // Load and set the icon
         primaryStage.setMaximized(true);
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/icon.png")));
+
+
 
         // Set the stage properties
         primaryStage.setTitle("Cruise Management System");

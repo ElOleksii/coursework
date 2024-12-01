@@ -7,7 +7,7 @@
       fx:controller="org.cruise.controller.cashier.EditCashierController"
       spacing="10">
     <children>
-        <Label text="Edit Cashier" style="-fx-font-size: 18px;" />
+        <Label alignment="TOP_CENTER" text="Edit Cashier" style="-fx-font-size: 18px;" />
 
         <TextField fx:id="fullNameField" promptText="Enter Full Name" />
         <TextField fx:id="phoneNumberField" promptText="Enter Phone Number" />
@@ -15,7 +15,7 @@
         <CheckBox fx:id="shiftCheckBox" text="Day Shift" />
 
 
-        <HBox spacing="10">
+        <HBox alignment="CENTER" spacing="10">
             <Button text="Save" onAction="#saveChanges"/>
             <Button text="Cancel" onAction="#cancel"/>
         </HBox>

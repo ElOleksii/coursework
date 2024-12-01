@@ -12,12 +12,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.cruise.controller.template.ObjectControllerTemplate;
-import org.cruise.model.Cashier;
 import org.cruise.model.Passenger;
+import org.cruise.model.Ticket;
 import org.cruise.service.FileManagement;
+import org.cruise.service.ValidationService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.cruise.service.ErrorHandler.showAlert;
 
@@ -31,13 +33,12 @@ public class PassengerController extends ObjectControllerTemplate<Passenger> {
     @FXML
     private TextField passengerAddressField;
     @FXML
-    private TextField passengerTicketIdField;
+    private ComboBox<Integer> passengerTicketIdComboBox;  // Замість TextField використовуємо ComboBox
 
     @FXML
     private TableView<Passenger> passengerTable;
 
     private final String filePath = "data/passengers.json";
-
 
     @FXML
     protected void initialize() {
@@ -45,7 +46,37 @@ public class PassengerController extends ObjectControllerTemplate<Passenger> {
         super.tableView = this.passengerTable;  // Передаємо таблицю в базовий клас
         super.dataList = FXCollections.observableArrayList();  // Ініціалізація списку об'єктів
 
-        super.initialize();  // Викликаємо базовий метод ініціалізації
+        super.initialize();
+
+        // Ініціалізуємо ComboBox для Ticket ID
+        loadTicketIds();
+    }
+
+
+
+
+    private void loadTicketIds() {
+        List<Ticket> tickets = FileManagement.loadFromFile("data/tickets.json", new TypeReference<List<Ticket>>() {});
+        List<Passenger> passengers = FileManagement.loadFromFile("data/passengers.json", new TypeReference<List<Passenger>>() {});
+
+        if (tickets != null && passengers != null) {
+            ObservableList<Integer> ticketIds = FXCollections.observableArrayList();
+
+            // Перевіряємо, які Ticket ID вже використовуються пасажирами, і виключаємо їх
+            List<Integer> usedTicketIds = passengers.stream()
+                    .map(Passenger::getTicketId)
+                    .collect(Collectors.toList());
+
+            for (Ticket ticket : tickets) {
+                if (!usedTicketIds.contains(ticket.getTicketId())) {
+                    ticketIds.add(ticket.getTicketId());
+                }
+            }
+
+            passengerTicketIdComboBox.setItems(ticketIds);
+        } else {
+            showAlert("Load Error", "Unable to load tickets or passengers data.", Alert.AlertType.ERROR);
+        }
     }
 
     @Override
@@ -104,21 +135,21 @@ public class PassengerController extends ObjectControllerTemplate<Passenger> {
 
     @FXML
     private void addPassenger() {
-        // Get values from input fields using their fx:id
+        if (!ValidationService.isValidStringLength(passengerNameField, "PassengerName", 30) ||
+                !ValidationService.isValidStringLength(passengerAddressField, "PassengerAddress", 30)) {
+            return;
+        }
         String fullName = passengerNameField.getText().trim();
         String phoneNumber = passengerPhoneNumberField.getText().trim();
         String address = passengerAddressField.getText().trim();
-        int ticketId;
+        Integer ticketId = passengerTicketIdComboBox.getValue();  // Отримуємо значення з ComboBox
 
-        if (fullName.isEmpty() || phoneNumber.isEmpty() || address.isEmpty()) {
-            showAlert("Input Error", "All fields are required.");
+        if (fullName.isEmpty() || phoneNumber.isEmpty() || address.isEmpty() || ticketId == null) {
+            showAlert("Input Error", "All fields are required.", Alert.AlertType.ERROR);
             return;
         }
-        
-        try {
-            ticketId = Integer.parseInt(passengerTicketIdField.getText().trim());
-        } catch (NumberFormatException e) {
-            System.out.println("Error: Ticket ID must be a valid number.");
+
+        if (!ValidationService.isValidPhoneNumber(passengerPhoneNumberField, "Phone Number")) {
             return;
         }
 
@@ -130,10 +161,14 @@ public class PassengerController extends ObjectControllerTemplate<Passenger> {
         // Use the inherited addItem method to add Passenger and save to file
         addItem(newPassenger);
 
+        // Remove the selected Ticket ID from ComboBox options
+        passengerTicketIdComboBox.getItems().remove(ticketId);
+
         // Clear input fields
         passengerNameField.clear();
         passengerPhoneNumberField.clear();
         passengerAddressField.clear();
-        passengerTicketIdField.clear();
+        passengerTicketIdComboBox.setValue(null);  // Очищаємо ComboBox
+        passengerTicketIdComboBox.setPromptText("Enter Ticket ID");
     }
 }

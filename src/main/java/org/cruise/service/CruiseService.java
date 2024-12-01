@@ -1,5 +1,6 @@
 package org.cruise.service;
 
+import org.cruise.model.Cashier;
 import org.cruise.model.Passenger;
 import org.cruise.model.Ticket;
 
@@ -12,6 +13,7 @@ public class CruiseService {
 
     private List<Passenger> passengers;
     private List<Ticket> tickets;
+    private List<Cashier> cashiers;
 
     public CruiseService(List<Passenger> passengers, List<Ticket> tickets) {
         this.passengers = passengers;
@@ -32,11 +34,9 @@ public class CruiseService {
                 .count();
     }
 
-    public List<String> getShipList() {
+    public Map<String, Long> getShipList() {
         return tickets.stream()
-                .map(Ticket::getShipName)
-                .distinct()
-                .collect(Collectors.toList());
+                .collect(Collectors.groupingBy(Ticket::getShipName, Collectors.counting()));
     }
 
     public String getMostPopularCabinClass() {
@@ -56,16 +56,21 @@ public class CruiseService {
 
     public String getMostPopularArrivalPort() {
         return tickets.stream()
-                .collect(Collectors.groupingBy(Ticket::getArrivalPort, Collectors.counting()))
+                .collect(Collectors.groupingBy(ticket -> ticket.getWay().getArrivalPort(), Collectors.counting()))
                 .entrySet().stream()
                 .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
                 .orElse("Unknown");
     }
 
-    public Optional<Passenger> findPassengerByTicketId(int ticketId) {
-        return passengers.stream()
-                .filter(passenger -> passenger.getTicketId() == ticketId)
-                .findFirst();
+
+
+
+    public Map<String, Long> getPassengerCountPerShip() {
+        if (tickets == null) {
+            throw new IllegalStateException("Tickets list is not initialized");
+        }
+        return tickets.stream()
+                .collect(Collectors.groupingBy(Ticket::getShipName, Collectors.counting()));
     }
 }

@@ -41,8 +41,8 @@ public class EditTicketController {
         // Populate fields with the ticket's current values
         ticketIdField.setText(String.valueOf(ticket.getTicketId()));  // Convert ticketId to String
         shipNameField.setText(ticket.getShipName());
-        departurePortField.setText(ticket.getDeparturePort());
-        arrivalPortField.setText(ticket.getArrivalPort());
+        departurePortField.setText(ticket.getWay().getDeparturePort());
+        arrivalPortField.setText(ticket.getWay().getArrivalPort());
         priceField.setText(String.valueOf(ticket.getPrice()));  // Convert price to String
         cabinClassComboBox.getSelectionModel().select(ticket.getCabinClass());
     }
@@ -57,8 +57,8 @@ public class EditTicketController {
                 // Update the ticket object with new values
                 ticket.setTicketId(Integer.parseInt(ticketIdField.getText().trim()));  // Convert String to int
                 ticket.setShipName(shipNameField.getText().trim());
-                ticket.setDeparturePort(departurePortField.getText().trim());
-                ticket.setArrivalPort(arrivalPortField.getText().trim());
+                ticket.getWay().setDeparturePort(departurePortField.getText().trim());
+                ticket.getWay().setArrivalPort(arrivalPortField.getText().trim());
                 ticket.setPrice(Float.parseFloat(priceField.getText().trim()));  // Convert String to float
                 ticket.setCabinClass(cabinClassComboBox.getSelectionModel().getSelectedItem());
 

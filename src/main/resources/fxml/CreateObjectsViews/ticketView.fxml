@@ -39,7 +39,7 @@
     </GridPane>
 
     <!-- Buttons -->
-    <HBox spacing="20" alignment="CENTER">
+    <HBox spacing="20" alignment="TOP_LEFT">
         <Button fx:id="addTicketButton" text="Add Ticket" onAction="#addTicket" />
     </HBox>
 

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.collections.FXCollections?>
-
 <?import java.lang.String?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -17,10 +15,10 @@
 
     <!-- Центральний контент -->
     <center>
-        <VBox spacing="15" alignment="TOP_LEFT">
+        <VBox fx:id="requestContainer" spacing="15" alignment="TOP_LEFT">
             <children>
                 <!-- Панель вибору запиту -->
-                <HBox spacing="10">
+                <HBox fx:id="requestBox" spacing="10">
                     <ComboBox fx:id="requestSelector" promptText="Select Request" prefWidth="250">
                         <items>
                             <FXCollections fx:factory="observableArrayList">
@@ -36,12 +34,20 @@
                     <Button text="Get Request" onAction="#handleGetRequest" style="-fx-background-color: #2980b9; -fx-text-fill: white;"/>
                 </HBox>
 
-                <!-- Результати запиту -->
-                <TextArea fx:id="requestResultArea"
-                          promptText="Request Results will be displayed here..."
-                          editable="false"
-                          wrapText="true"
-                          prefWidth="600" prefHeight="200"/>
+                <StackPane fx:id="resultPane">
+                    <TextArea fx:id="resultsTextArea"
+                              promptText="Request Results will be displayed here..."
+                              editable="false"
+                              wrapText="true"
+                              style="-fx-font-size: 16px;"
+                              prefWidth="600" prefHeight="200"/>
+                    <TableView fx:id="shipTable" visible="false">
+                        <columns>
+                            <TableColumn text="Ship Name" fx:id="shipNameColumn" prefWidth="300"/>
+                            <TableColumn text="Passenger Count" fx:id="passengerCountColumn" prefWidth="300"/>
+                        </columns>
+                    </TableView>
+                </StackPane>
             </children>
         </VBox>
     </center>
