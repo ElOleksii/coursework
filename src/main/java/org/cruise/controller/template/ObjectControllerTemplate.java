@@ -71,22 +71,13 @@ public abstract class ObjectControllerTemplate<T> {
         T selectedItem = tableView.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             dataList.remove(selectedItem);
-            FileManagement.saveToFile(dataList, filePath);
+            FileManagement.saveToFile(dataList.stream().toList(), filePath); // Конвертація ObservableList у List
         }
     }
 
     protected void addItem(T item) {
         dataList.add(item);
-        FileManagement.saveToFile(dataList, filePath);
+        FileManagement.saveToFile(dataList.stream().toList(), filePath); // Конвертація ObservableList у List
     }
-
-    public void updateItem(T updatedItem) {
-        int index = dataList.indexOf(updatedItem);
-        if (index != -1) {
-            dataList.set(index, updatedItem);
-            FileManagement.saveToFile(dataList, filePath);
-        }
-    }
-
 
 }

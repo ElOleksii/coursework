@@ -103,24 +103,24 @@ public class TicketController extends ObjectControllerTemplate<Ticket> {
         Ticket selectedTicket = tableView.getSelectionModel().getSelectedItem();
         if (selectedTicket != null) {
             try {
-                // Load the EditTicket.fxml file
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CreateObjectsViews/editTicket.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/EditObjectsViews/editTicket.fxml"));
+                Parent root = loader.load();
+
+                EditTicketController controller = loader.getController();
+                controller.initializeTicket(selectedTicket, this);
+
                 Stage stage = new Stage();
                 stage.setTitle("Edit Ticket");
-
-                Parent root = loader.load();
-                EditTicketController controller = loader.getController();
-                controller.setTicket(selectedTicket);
-
                 stage.setScene(new Scene(root));
                 stage.showAndWait();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            showAlert("No Selection", "No ticket selected. Please select a ticket to edit.", Alert.AlertType.WARNING);
+            System.out.println("No ticket selected.");
         }
     }
+
 
     @Override
     protected TypeReference<List<Ticket>> getTypeReference() {
@@ -193,4 +193,14 @@ public class TicketController extends ObjectControllerTemplate<Ticket> {
         ticketCabinClassField.setValue("Select Class");
         ticketCabinClassField.setPlaceholder(new Label("Select Class"));
     }
+
+    public void updateTicketInTable(Ticket updatedTicket) {
+        int index = dataList.indexOf(updatedTicket);
+        if (index >= 0) {
+            dataList.set(index, updatedTicket);
+            tableView.refresh();
+            FileManagement.saveToFile(dataList, filePath);
+        }
+    }
+
 }

@@ -1,90 +1,130 @@
 package org.cruise.controller.ticket;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.cruise.controller.ticket.TicketController;
 import org.cruise.model.Ticket;
+import org.cruise.service.ValidationService;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
+import static org.cruise.service.ErrorHandler.showAlert;
 
 public class EditTicketController {
 
     @FXML
-    private TextField ticketIdField;
-    @FXML
     private TextField shipNameField;
+
     @FXML
     private TextField departurePortField;
+
     @FXML
     private TextField arrivalPortField;
+
+    @FXML
+    private DatePicker ticketDatePicker;
+
     @FXML
     private TextField priceField;
-    @FXML
-    private ComboBox<String> cabinClassComboBox;
-
-    private Ticket ticket; // Reference to the ticket being edited
 
     @FXML
-    private void initialize() {
-        // Initialize ComboBox items
-        cabinClassComboBox.setItems(FXCollections.observableArrayList("Economy", "Business", "First"));
+    private TextField cabinClassField;
+
+    @FXML
+    private Button saveButton;
+
+    @FXML
+    private Button cancelButton;
+
+    private Ticket ticketToEdit;
+    private TicketController parentController;
+
+
+    public void initializeTicket(Ticket ticket, TicketController parentController) {
+        this.ticketToEdit = ticket;
+        this.parentController = parentController;
+        populateFields();
     }
 
-    /**
-     * Sets the ticket to be edited.
-     *
-     * @param ticket The ticket to edit.
-     */
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
 
-        // Populate fields with the ticket's current values
-        ticketIdField.setText(String.valueOf(ticket.getTicketId()));  // Convert ticketId to String
-        shipNameField.setText(ticket.getShipName());
-        departurePortField.setText(ticket.getWay().getDeparturePort());
-        arrivalPortField.setText(ticket.getWay().getArrivalPort());
-        priceField.setText(String.valueOf(ticket.getPrice()));  // Convert price to String
-        cabinClassComboBox.getSelectionModel().select(ticket.getCabinClass());
+    private void populateFields() {
+        if (ticketToEdit != null) {
+            shipNameField.setText(ticketToEdit.getShipName());
+            departurePortField.setText(ticketToEdit.getWay().getDeparturePort());
+            arrivalPortField.setText(ticketToEdit.getWay().getArrivalPort());
+            ticketDatePicker.setValue(ticketToEdit.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            priceField.setText(String.valueOf(ticketToEdit.getPrice()));
+            cabinClassField.setText(ticketToEdit.getCabinClass());
+        }
     }
 
-    /**
-     * Saves the changes made to the ticket.
-     */
+
     @FXML
-    private void saveChanges() {
-        if (ticket != null) {
+    public void saveChanges() {
+        if (ticketToEdit != null) {
             try {
-                // Update the ticket object with new values
-                ticket.setTicketId(Integer.parseInt(ticketIdField.getText().trim()));  // Convert String to int
-                ticket.setShipName(shipNameField.getText().trim());
-                ticket.getWay().setDeparturePort(departurePortField.getText().trim());
-                ticket.getWay().setArrivalPort(arrivalPortField.getText().trim());
-                ticket.setPrice(Float.parseFloat(priceField.getText().trim()));  // Convert String to float
-                ticket.setCabinClass(cabinClassComboBox.getSelectionModel().getSelectedItem());
+                // Валідація довжини текстових полів
+                if (!ValidationService.isValidStringLength(shipNameField, "Ship Name", 30) ||
+                        !ValidationService.isValidStringLength(departurePortField, "Departure Port", 50) ||
+                        !ValidationService.isValidStringLength(arrivalPortField, "Arrival Port", 50)) {
+                    return;
+                }
 
-                // Close the edit window
+                if (!ValidationService.arePortsDifferent(departurePortField, arrivalPortField)) {
+                    return;
+                }
+
+                LocalDate date = ticketDatePicker.getValue();
+                if (date == null || date.isBefore(LocalDate.now())) {
+                    showAlert("Validation Error", "Date must be in the future.", javafx.scene.control.Alert.AlertType.ERROR);
+                    return;
+                }
+
+                // Валідація ціни
+                if (!ValidationService.isNumericWithRange(priceField, "Price", 0.01, 10_000)) {
+                    return;
+                }
+
+                // Застосування змін
+                ticketToEdit.setShipName(shipNameField.getText().trim());
+                ticketToEdit.getWay().setDeparturePort(departurePortField.getText().trim());
+                ticketToEdit.getWay().setArrivalPort(arrivalPortField.getText().trim());
+                ticketToEdit.setDate(Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                ticketToEdit.setPrice(Float.parseFloat(priceField.getText().trim()));
+                ticketToEdit.setCabinClass(cabinClassField.getText().trim());
+
+                // Оновлення в таблиці
+                if (parentController != null) {
+                    parentController.updateTicketInTable(ticketToEdit);
+                }
+
                 closeWindow();
             } catch (NumberFormatException e) {
-                System.out.println("Error: Invalid ticket ID or price format.");
+                showAlert("Validation Error", "Invalid price value. Please enter a valid number.", javafx.scene.control.Alert.AlertType.ERROR);
             }
         } else {
-            System.out.println("Error: No ticket to edit.");
+            System.out.println("Ticket is null.");
         }
     }
 
     /**
-     * Cancels the editing process without saving changes.
+     * Закриває вікно редагування.
      */
     @FXML
-    private void cancelEdit() {
+    private void cancel() {
         closeWindow();
     }
 
     /**
-     * Closes the edit window.
+     * Закриває поточне вікно.
      */
     private void closeWindow() {
-        Stage stage = (Stage) ticketIdField.getScene().getWindow();
+        Stage stage = (Stage) shipNameField.getScene().getWindow();
         stage.close();
     }
 }

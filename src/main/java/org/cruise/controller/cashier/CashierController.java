@@ -1,7 +1,6 @@
 package org.cruise.controller.cashier;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -14,6 +13,7 @@ import javafx.stage.Stage;
 import org.cruise.controller.template.ObjectControllerTemplate;
 import org.cruise.model.Cashier;
 
+import org.cruise.service.FileManagement;
 import org.cruise.service.ValidationService;
 
 import java.io.IOException;
@@ -76,10 +76,11 @@ public class CashierController extends ObjectControllerTemplate<Cashier> {
         Cashier selectedCashier = tableView.getSelectionModel().getSelectedItem();
         if (selectedCashier != null) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CreateObjectsViews/editCashier.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/EditObjectsViews/editCashier.fxml"));
                 Parent root = loader.load();
+
                 EditCashierController controller = loader.getController();
-                controller.setObjectToEdit(selectedCashier, this);
+                controller.initializeCashier(selectedCashier, this);
 
                 Stage stage = new Stage();
                 stage.setTitle("Edit Cashier");
@@ -89,9 +90,11 @@ public class CashierController extends ObjectControllerTemplate<Cashier> {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("No cashier selected");
+            System.out.println("No cashier selected.");
         }
     }
+
+
 
     @Override
     protected TypeReference<List<Cashier>> getTypeReference() {
@@ -127,11 +130,14 @@ public class CashierController extends ObjectControllerTemplate<Cashier> {
         cashierShiftCheckBox.setSelected(false);
     }
 
-    public void updateItem(Cashier updatedCashier) {
+
+
+    public void updateCashierInTable(Cashier updatedCashier) {
         int index = dataList.indexOf(updatedCashier);
         if (index >= 0) {
             dataList.set(index, updatedCashier);
             tableView.refresh();
+            FileManagement.saveToFile(dataList, filePath);
         }
     }
 }

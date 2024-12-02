@@ -1,63 +1,108 @@
 package org.cruise.controller.cashier;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import org.cruise.controller.template.EditObjectTemplate;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import org.cruise.controller.cashier.CashierController;
 import org.cruise.model.Cashier;
+import org.cruise.service.ValidationService;
 
-public class EditCashierController extends EditObjectTemplate<Cashier> {
+import static org.cruise.service.ErrorHandler.showAlert;
 
-    // FXML Fields for editing Cashier properties
+public class EditCashierController {
+
     @FXML
     private TextField fullNameField;
+
     @FXML
     private TextField phoneNumberField;
+
     @FXML
     private TextField organizationField;
+
     @FXML
     private CheckBox shiftCheckBox;
 
-    @Override
-    protected void populateFields() {
-        if (objectToEdit != null) {
-            // Populate the fields with the current data of the cashier
-            fullNameField.setText(objectToEdit.getFullName());
-            phoneNumberField.setText(objectToEdit.getPhoneNumber());
-            organizationField.setText(objectToEdit.getOrganizationName());
-            shiftCheckBox.setSelected(objectToEdit.isShift());
-        } else {
-            System.out.println("Cashier object is null.");
-        }
+    @FXML
+    private Button saveButton;
+
+    @FXML
+    private Button cancelButton;
+
+    private Cashier cashierToEdit;
+    private CashierController parentController;
+
+
+    public void initializeCashier(Cashier cashier, CashierController parentController) {
+        this.cashierToEdit = cashier;
+        this.parentController = parentController;
+        populateFields();
     }
 
-    @Override
-    protected void applyChanges() {
-        if (objectToEdit != null) {
-            // Apply changes to the cashier object
-            objectToEdit.setFullName(fullNameField.getText().trim());
-            objectToEdit.setPhoneNumber(phoneNumberField.getText().trim());
-            objectToEdit.setOrganizationName(organizationField.getText().trim());
-            objectToEdit.setShift(shiftCheckBox.isSelected());
 
-            // Save the changes to the file or list
-            // Assuming `dataList` and `filePath` are accessible from here
-            if (getObjectController() != null) {
-                getObjectController().updateItem(objectToEdit);
+    private void populateFields() {
+        if (cashierToEdit != null) {
+            fullNameField.setText(cashierToEdit.getFullName());
+            phoneNumberField.setText(cashierToEdit.getPhoneNumber());
+            organizationField.setText(cashierToEdit.getOrganizationName());
+            shiftCheckBox.setSelected(cashierToEdit.isShift());
+        }
+
+    }
+
+    @FXML
+    public void saveChanges() {
+        if (cashierToEdit != null) {
+            // Валідація полів
+            if (!ValidationService.isValidStringLength(fullNameField, "Full Name", 30) ||
+                    !ValidationService.isValidStringLength(organizationField, "Organization Name", 30) ||
+                    !ValidationService.isValidPhoneNumber(phoneNumberField, "Phone Number")) {
+                return;
             }
+
+            String fullName = fullNameField.getText().trim();
+            String phoneNumber = phoneNumberField.getText().trim();
+            String organizationName = organizationField.getText().trim();
+
+            if (fullName.isEmpty() || phoneNumber.isEmpty() || organizationName.isEmpty()) {
+                showAlert("Validation Error", "All fields are required.", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Перевірка унікальності номера телефону
+            if (!ValidationService.isValidPhoneNumber(phoneNumberField, phoneNumber)) {
+                showAlert("Validation Error", "Phone number must be unique.", Alert.AlertType.ERROR);
+                return;
+            }
+
+            // Оновлення об'єкта
+            cashierToEdit.setFullName(fullName);
+            cashierToEdit.setPhoneNumber(phoneNumber);
+            cashierToEdit.setOrganizationName(organizationName);
+            cashierToEdit.setShift(shiftCheckBox.isSelected());
+
+            // Оновлення таблиці
+            if (parentController != null) {
+                parentController.updateCashierInTable(cashierToEdit);
+            }
+
+            closeWindow();
         } else {
-            System.out.println("Cashier object is null during applyChanges.");
+            System.out.println("Cashier is null.");
         }
     }
+
 
     @FXML
     private void cancel() {
-        // Close the edit window without saving changes
-        closeWindow(fullNameField);
+        closeWindow();
     }
 
-    @FXML
-    private void saveChanges() {
-        applyChanges();
-        closeWindow(fullNameField);
+    private void closeWindow() {
+        Stage stage = (Stage) fullNameField.getScene().getWindow();
+        stage.close();
     }
 }

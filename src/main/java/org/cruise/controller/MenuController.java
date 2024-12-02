@@ -14,7 +14,7 @@ import java.util.Map;
 public class MenuController {
 
     @FXML
-    private StackPane dynamicContent; // Контейнер для динамічного контенту
+    private StackPane dynamicContent;
 
     @FXML
     private VBox sideNavBar; // Ліве бокове меню
@@ -82,6 +82,6 @@ public class MenuController {
 
     @FXML
     private void showAllRequest() {
-        loadView("/fxml/requests.fxml");
+        loadView("/fxml/Request.fxml");
     }
 }

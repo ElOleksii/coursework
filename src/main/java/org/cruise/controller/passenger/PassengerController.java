@@ -103,30 +103,28 @@ public class PassengerController extends ObjectControllerTemplate<Passenger> {
 
     @Override
     protected void openEditWindow() {
-        // Get the selected Passenger
-        Passenger selectedPassenger = tableView.getSelectionModel().getSelectedItem();
+        Passenger selectedPassenger = passengerTable.getSelectionModel().getSelectedItem();
         if (selectedPassenger != null) {
             try {
-                // Load the EditPassenger.fxml file
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CreateObjectsViews/editPassenger.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/EditObjectsViews/editPassenger.fxml"));
+                Parent root = loader.load();
+
+                EditPassengerController controller = loader.getController();
+                controller.initializePassenger(selectedPassenger, this);
+
                 Stage stage = new Stage();
                 stage.setTitle("Edit Passenger");
-
-                // Load the FXML and set the controller's Passenger via the setter method
-                Parent root = loader.load();
-//                EditPassengerController controller = loader.getController();
-//                controller.setPassenger(selectedPassenger);
-
-                // Set the scene and show the stage
                 stage.setScene(new Scene(root));
                 stage.showAndWait();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("No Passenger selected");
+            System.out.println("No Passenger selected.");
         }
     }
+
 
     @Override
     protected TypeReference<List<Passenger>> getTypeReference() {
@@ -142,7 +140,7 @@ public class PassengerController extends ObjectControllerTemplate<Passenger> {
         String fullName = passengerNameField.getText().trim();
         String phoneNumber = passengerPhoneNumberField.getText().trim();
         String address = passengerAddressField.getText().trim();
-        Integer ticketId = passengerTicketIdComboBox.getValue();  // Отримуємо значення з ComboBox
+        Integer ticketId = passengerTicketIdComboBox.getValue();
 
         if (fullName.isEmpty() || phoneNumber.isEmpty() || address.isEmpty() || ticketId == null) {
             showAlert("Input Error", "All fields are required.", Alert.AlertType.ERROR);
@@ -153,12 +151,8 @@ public class PassengerController extends ObjectControllerTemplate<Passenger> {
             return;
         }
 
-
-
-        // Create the new Passenger object
         Passenger newPassenger = new Passenger(fullName, phoneNumber, address, ticketId);
 
-        // Use the inherited addItem method to add Passenger and save to file
         addItem(newPassenger);
 
         // Remove the selected Ticket ID from ComboBox options
@@ -168,7 +162,26 @@ public class PassengerController extends ObjectControllerTemplate<Passenger> {
         passengerNameField.clear();
         passengerPhoneNumberField.clear();
         passengerAddressField.clear();
-        passengerTicketIdComboBox.setValue(null);  // Очищаємо ComboBox
+        passengerTicketIdComboBox.setValue(null);
         passengerTicketIdComboBox.setPromptText("Enter Ticket ID");
+
+        // Refresh the table view
+        passengerTable.refresh();
     }
+
+    public void updatePassengerInTable(Passenger updatedPassenger) {
+        int index = dataList.indexOf(updatedPassenger);
+        if (index != -1) {
+            dataList.set(index, updatedPassenger);
+            passengerTable.refresh();
+            FileManagement.saveToFile(dataList.stream().toList(), filePath);
+        }
+    }
+
+    public boolean isTicketIdUnique(int ticketId, Passenger currentPassenger) {
+        return dataList.stream()
+                .filter(passenger -> passenger != currentPassenger) // Виключаємо поточного пасажира
+                .noneMatch(passenger -> passenger.getTicketId() == ticketId);
+    }
+
 }

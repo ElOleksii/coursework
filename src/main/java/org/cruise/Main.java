@@ -12,7 +12,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Load the FXML file
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/layout.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Layout.fxml"));
         Parent root = loader.load();  // Завантажуємо коректно root з FXML
 
         // Create scene using the root loaded from the FXML
