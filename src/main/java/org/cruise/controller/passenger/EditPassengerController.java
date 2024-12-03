@@ -9,7 +9,8 @@ import org.cruise.controller.passenger.PassengerController;
 import org.cruise.model.Passenger;
 import org.cruise.service.ValidationService;
 
-import static org.cruise.service.ErrorHandler.showAlert;
+import static org.cruise.service.ValidationService.showAlert;
+
 
 public class EditPassengerController {
 

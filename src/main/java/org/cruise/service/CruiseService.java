@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 
 public class CruiseService {
 
-    private List<Passenger> passengers;
-    private List<Ticket> tickets;
-    private List<Cashier> cashiers;
+    protected List<Passenger> passengers;
+    protected List<Ticket> tickets;
+    protected List<Cashier> cashiers;
 
     public CruiseService(List<Passenger> passengers, List<Ticket> tickets) {
         this.passengers = passengers;
@@ -25,7 +25,6 @@ public class CruiseService {
     }
 
     public long getPassengerCountForShip(String shipName) {
-        // Перевірка, щоб tickets не був null перед використанням
         if (tickets == null) {
             throw new IllegalStateException("Tickets list is not initialized");
         }
@@ -64,13 +63,4 @@ public class CruiseService {
     }
 
 
-
-
-    public Map<String, Long> getPassengerCountPerShip() {
-        if (tickets == null) {
-            throw new IllegalStateException("Tickets list is not initialized");
-        }
-        return tickets.stream()
-                .collect(Collectors.groupingBy(Ticket::getShipName, Collectors.counting()));
-    }
 }

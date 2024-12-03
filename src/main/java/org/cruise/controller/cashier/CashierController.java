@@ -19,7 +19,7 @@ import org.cruise.service.ValidationService;
 import java.io.IOException;
 import java.util.List;
 
-import static org.cruise.service.ErrorHandler.showAlert;
+import static org.cruise.service.ValidationService.showAlert;
 
 public class CashierController extends ObjectControllerTemplate<Cashier> {
 
@@ -117,6 +117,13 @@ public class CashierController extends ObjectControllerTemplate<Cashier> {
             return;
         }
         if (!ValidationService.isValidPhoneNumber(cashierPhoneNumberField, "Phone Number")) {
+            return;
+        }
+
+        if (ValidationService.isDuplicateByFullName(dataList, fullName, org.cruise.model.Cashier.class)) {
+            return;
+        }
+        if (ValidationService.isDuplicateByPhoneNumber(dataList, phoneNumber, org.cruise.model.Cashier.class)) {
             return;
         }
 

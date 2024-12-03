@@ -13,7 +13,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-import static org.cruise.service.ErrorHandler.showAlert;
+import static org.cruise.service.ValidationService.showAlert;
 
 public class EditTicketController {
 

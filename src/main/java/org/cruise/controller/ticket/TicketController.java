@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import static org.cruise.service.ErrorHandler.showAlert;
+import static org.cruise.service.ValidationService.showAlert;
 
 public class TicketController extends ObjectControllerTemplate<Ticket> {
 

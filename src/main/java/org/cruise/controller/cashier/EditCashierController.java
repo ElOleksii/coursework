@@ -10,7 +10,7 @@ import org.cruise.controller.cashier.CashierController;
 import org.cruise.model.Cashier;
 import org.cruise.service.ValidationService;
 
-import static org.cruise.service.ErrorHandler.showAlert;
+import static org.cruise.service.ValidationService.showAlert;
 
 public class EditCashierController {
 

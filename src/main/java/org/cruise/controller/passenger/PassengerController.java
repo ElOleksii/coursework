@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.cruise.service.ErrorHandler.showAlert;
+import static org.cruise.service.ValidationService.showAlert;
 
 public class PassengerController extends ObjectControllerTemplate<Passenger> {
 
@@ -148,6 +148,13 @@ public class PassengerController extends ObjectControllerTemplate<Passenger> {
         }
 
         if (!ValidationService.isValidPhoneNumber(passengerPhoneNumberField, "Phone Number")) {
+            return;
+        }
+
+        if (ValidationService.isDuplicateByFullName(dataList, fullName, org.cruise.model.Passenger.class)) {
+            return;
+        }
+        if (ValidationService.isDuplicateByPhoneNumber(dataList, phoneNumber, org.cruise.model.Passenger.class)) {
             return;
         }
 
