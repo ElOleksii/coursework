@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.cruises.controller.cruise.CruiseController"
+      spacing="10" alignment="TOP_LEFT" prefWidth="800">
+
+    <Label text="Cruise Management" style="-fx-font-size: 24px;" />
+
+    <GridPane hgap="10" vgap="10" alignment="TOP_LEFT">
+
+        <Label text="Route:" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-size: 16px;" />
+        <ComboBox promptText="Select Route" fx:id="routeComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Ship:" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-size: 16px;" />
+        <ComboBox promptText="Select Ship" fx:id="shipComboBox" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Cruise Name:" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-size: 16px;" />
+        <TextField promptText="Enter Cruise Name" fx:id="cruiseNameField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Basic Price:" GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-font-size: 16px;" />
+        <TextField promptText="Set Basic Price" fx:id="basicPriceField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Start Date:" GridPane.rowIndex="4" GridPane.columnIndex="0" style="-fx-font-size: 16px;" />
+        <DatePicker promptText="Set Start Day" fx:id="startDatePicker" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+        <Label text="End Date:" GridPane.rowIndex="5" GridPane.columnIndex="0" style="-fx-font-size: 16px;" />
+        <DatePicker promptText="Set End Date" fx:id="endDatePicker" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <HBox spacing="20" alignment="TOP_LEFT">
+        <Button fx:id="addCruiseButton" text="Add Cruise" onAction="#addCruise" style="-fx-font-size: 16px;" />
+        <Button fx:id="cancelEditButton" text="Cancel Edit" onAction="#cancelEdit" visible="false" style="-fx-font-size: 16px;" />
+    </HBox>
+
+    <TableView fx:id="cruiseTable" prefHeight="400" prefWidth="780">
+        <columns>
+            <TableColumn text="Cruise ID" fx:id="cruiseIdCol"/>
+            <TableColumn text="Route ID" fx:id="routeIdCol"/>
+            <TableColumn text="Ship Name" fx:id="shipNameCol"/>
+            <TableColumn text="Cruise Name" fx:id="cruiseNameCol"/>
+            <TableColumn text="Basic Price" fx:id="basicPriceCol"/>
+            <TableColumn text="Start Date" fx:id="startDateCol"/>
+            <TableColumn text="End Date" fx:id="endDateCol"/>
+            <TableColumn text="Route Description" fx:id="routeDescriptionCol"/>
+        </columns>
+    </TableView>
+
+</VBox>

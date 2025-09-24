@@ -4,23 +4,25 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.cruise.controller.passenger.PassengerController"
+      fx:controller="org.cruises.controller.passenger.PassengerController"
       spacing="10">
     <children>
-        <Label text="Passenger Management" style="-fx-font-size: 18px;" />
+        <Label text="Passenger Management" style="-fx-font-size: 24px;" />
+
 
         <HBox spacing="10">
             <TextField fx:id="passengerNameField" promptText="Enter Passenger Name" />
             <TextField fx:id="passengerPhoneNumberField" promptText="Enter Phone Number" />
-            <TextField fx:id="passengerAddressField" promptText="Enter address" />
-            <ComboBox fx:id="passengerTicketIdComboBox" promptText="Select ticket id" />
-            <Button text="Add Passenger" onAction="#addPassenger" />
+            <HBox spacing="20" alignment="TOP_LEFT">
+                <Button fx:id="addPassengerButton" text="Add Cruise" onAction="#addPassenger" style="-fx-font-size: 16px;" />
+                <Button fx:id="cancelEditButton" text="Cancel Edit" onAction="#cancelEdit" visible="false" style="-fx-font-size: 16px;" />
+            </HBox>
         </HBox>
 
         <TableView fx:id="passengerTable">
             <columns>
-
             </columns>
         </TableView>
     </children>
 </VBox>
+

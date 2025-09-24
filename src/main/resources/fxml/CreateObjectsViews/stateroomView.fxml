@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.cruises.controller.stateroom.StateroomController"
+      spacing="10" alignment="TOP_LEFT" prefWidth="800">
+
+    <Label text="Stateroom Management" style="-fx-font-size: 24px;" />
+
+    <GridPane hgap="10" vgap="10" alignment="TOP_LEFT">
+        <Label text="Stateroom Class:" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-size: 16px;" />
+        <ComboBox promptText="Set Stateroom Class" fx:id="stateroomClassComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Capacity:" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-font-size: 16px;" />
+        <TextField promptText="Set Capacity" fx:id="capacityField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Price:" GridPane.rowIndex="2" GridPane.columnIndex="0" style="-fx-font-size: 16px;" />
+        <TextField promptText="Set Price" fx:id="priceField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Ship:" GridPane.rowIndex="3" GridPane.columnIndex="0" style="-fx-font-size: 16px;" />
+        <ComboBox promptText="Select Ship" fx:id="shipComboBox" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Is reserved:" GridPane.rowIndex="4" GridPane.columnIndex="0" style="-fx-font-size: 16px;" />
+        <CheckBox fx:id="isReservedCheckBox" text="Reserved" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+
+    </GridPane>
+
+    <HBox spacing="20" alignment="TOP_LEFT">
+        <Button fx:id="addStateroomButton" text="Add Stateroom" onAction="#addStateroom" style="-fx-font-size: 16px;" />
+        <Button fx:id="cancelEditButton" text="Cancel Edit" onAction="#cancelEdit" visible="false" style="-fx-font-size: 16px;" />
+    </HBox>
+
+    <TableView fx:id="stateroomTable" prefHeight="400" prefWidth="780">
+        <columns>
+            <TableColumn text="ID" fx:id="stateroomIdCol"/>
+            <TableColumn text="Class" fx:id="stateroomClassCol"/>
+            <TableColumn text="Capacity" fx:id="capacityCol"/>
+            <TableColumn text="Price" fx:id="priceCol"/>
+            <TableColumn text="Ship ID" fx:id="shipIdCol"/>
+            <TableColumn text="Reserved" fx:id="isReservedCol"/>
+        </columns>
+    </TableView>
+</VBox>

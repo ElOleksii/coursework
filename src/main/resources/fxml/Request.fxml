@@ -1,53 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
+
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.cruise.controller.RequestController"
-            style="-fx-padding: 20; -fx-background-color: #f9f9f9;">
+            fx:controller="org.cruises.controller.RequestController"
+            prefWidth="800">
 
     <!-- Верхній заголовок -->
     <top>
-        <Label text="System Requests" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 10;" />
+        <Label text="Request Panel"
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 10 0 20 0;"/>
     </top>
 
-    <!-- Центральний контент -->
+    <!-- Центральна частина -->
     <center>
-        <VBox fx:id="requestContainer" spacing="15" alignment="TOP_LEFT">
+        <VBox spacing="15" alignment="TOP_LEFT">
             <children>
-                <!-- Панель вибору запиту -->
-                <HBox fx:id="requestBox" spacing="10">
-                    <ComboBox fx:id="requestSelector" promptText="Select Request" prefWidth="250">
+
+                <!-- Вибір типу запиту -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Choose Request:" style="-fx-font-size: 16px;"/>
+                    <ComboBox fx:id="sqlRequestSelector" prefWidth="350" promptText="Select SQL Request">
                         <items>
                             <FXCollections fx:factory="observableArrayList">
-                                <String fx:value="Total Passengers"/>
-                                <String fx:value="Passengers on Ship"/>
-                                <String fx:value="Ship List"/>
-                                <String fx:value="Popular Cabin Class"/>
-                                <String fx:value="Total Revenue"/>
-                                <String fx:value="Popular Arrival Port"/>
+                                <String fx:value="1. Passengers by Cashier"/>
+                                <String fx:value="2. Passengers by Name LIKE"/>
+                                <String fx:value="3. Cruises in Date Range"/>
+                                <String fx:value="4. Ticket Count (Last Week)"/>
+                                <String fx:value="5. Ticket Count by Cashier"/>
+                                <String fx:value="6. Max Seller Cashier"/>
+                                <String fx:value="7. Max Price Cruise per Route"/>
+                                <String fx:value="8. Idle Cashiers (Last Week)"/>
+                                <String fx:value="9. Cashier Activity (UNION)"/>
                             </FXCollections>
                         </items>
                     </ComboBox>
-                    <Button text="Get Request" onAction="#handleGetRequest" style="-fx-background-color: #2980b9; -fx-text-fill: white;"/>
+                    <Button text="Run Query" onAction="#handleExecuteQuery"
+                            style="-fx-background-color: #2c3e50; -fx-text-fill: white;"/>
                 </HBox>
 
-                <StackPane fx:id="resultPane">
-                    <TextArea fx:id="resultsTextArea"
-                              promptText="Request Results will be displayed here..."
-                              editable="false"
+                <!-- Поле для додаткових параметрів -->
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="Parameter:" style="-fx-font-size: 14px;"/>
+                    <!-- Звичайне текстове поле параметра -->
+                    <TextField fx:id="parameterField" promptText="Enter parameter if needed..." prefWidth="300"/>
+                    <!-- Два приховані DatePicker для вибору дат -->
+                    <DatePicker fx:id="startDatePicker" visible="false" prefWidth="140" />
+                    <DatePicker fx:id="endDatePicker" visible="false" prefWidth="140" />
+                </HBox>
+
+                <!-- Панель результату -->
+                <StackPane fx:id="resultPanel" style="-fx-padding: 10;">
+                    <TextArea fx:id="resultTextArea"
+                              promptText="Results will be displayed here..."
                               wrapText="true"
-                              style="-fx-font-size: 16px;"
-                              prefWidth="600" prefHeight="200"/>
-                    <TableView fx:id="shipTable" visible="false">
+                              editable="false"
+                              style="-fx-font-size: 14px;"
+                              prefHeight="250" prefWidth="700"/>
+                    <TableView fx:id="resultTable" visible="false" prefHeight="250">
                         <columns>
-                            <TableColumn text="Ship Name" fx:id="shipNameColumn" prefWidth="300"/>
-                            <TableColumn text="Passenger Count" fx:id="passengerCountColumn" prefWidth="300"/>
                         </columns>
                     </TableView>
                 </StackPane>
+
             </children>
         </VBox>
     </center>

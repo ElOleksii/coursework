@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.cruises.controller.route.RouteController" spacing="10">
+
+    <Label text="Route Management" style="-fx-font-size: 24px;" />
+
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label style="-fx-font-size: 16px; -fx-text-fill: #34495e;" text="Departure Port:" />
+        <TextField fx:id="departureField" promptText="Enter departure port" prefWidth="200"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label style="-fx-font-size: 16px; -fx-text-fill: #34495e;" text="Arrival Port:" />
+        <TextField fx:id="arrivalField" promptText="Enter arrival port" prefWidth="200"/>
+    </HBox>
+
+    <HBox spacing="15" alignment="CENTER_LEFT">
+        <Button fx:id="addRouteButton" text="Add Route" onAction="#addRoute"/>
+        <Button fx:id="cancelEditButton" text="Cancel Edit" onAction="#cancelEdit" visible="false" style="-fx-font-size: 16px;" />
+    </HBox>
+
+    <TableView fx:id="routeTable" prefHeight="300" prefWidth="450">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="70"/>
+            <TableColumn fx:id="departureColumn" text="Departure Port" prefWidth="190"/>
+            <TableColumn fx:id="arrivalColumn" text="Arrival Port" prefWidth="190"/>
+        </columns>
+    </TableView>
+
+</VBox>

@@ -4,17 +4,20 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.cruise.controller.cashier.CashierController"
+      fx:controller="org.cruises.controller.employee.EmployeeController"
       spacing="10">
     <children>
-        <Label text="Cashier Management" style="-fx-font-size: 18px;" />
+        <Label text="Cashier Management" style="-fx-font-size: 24px;" />
 
         <HBox spacing="10">
             <TextField fx:id="cashierNameField" promptText="Enter Cashier Name" />
             <TextField fx:id="cashierPhoneNumberField" promptText="Enter Phone Number" />
             <TextField fx:id="cashierOrganizationField" promptText="Enter Organization Name" />
             <CheckBox fx:id="cashierShiftCheckBox" text="Shift" />
-            <Button text="Add Cashier" onAction="#addCashier" />
+            <HBox spacing="10">
+                <Button fx:id="cashierSubmitButton" onAction="#addCashier" text="Add Cashier"/>
+                <Button fx:id="cancelEditButton" onAction="#cancelEdit" text="Cancel Edit" visible="false"/>
+            </HBox>
         </HBox>
 
         <TableView fx:id="cashierTable">

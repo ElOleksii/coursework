@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.cruises.controller.order.OrderController"
+      spacing="10">
+
+    <Label text="Order Management" style="-fx-font-size: 24px;" />
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Passenger ID:" style="-fx-font-size: 16px;"/>
+        <TextField fx:id="passengerIdField" promptText="Enter Passenger ID" prefWidth="200"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Status:" style="-fx-font-size: 16px;"/>
+        <TextField fx:id="statusField" promptText="Enter Order Status" prefWidth="200"/>
+    </HBox>
+
+    <HBox spacing="15" alignment="CENTER_LEFT">
+        <Button fx:id="addOrderButton" text="Add Order" onAction="#addOrder"/>
+        <Button fx:id="cancelEditButton" text="Cancel Edit" onAction="#cancelEdit" visible="false"/>
+    </HBox>
+
+    <TableView fx:id="orderTable" prefHeight="300" prefWidth="600">
+        <columns>
+            <TableColumn fx:id="idColumn" text="Order ID" prefWidth="100"/>
+            <TableColumn fx:id="passengerIdColumn" text="Passenger ID" prefWidth="150"/>
+            <TableColumn fx:id="dateColumn" text="Date and Time" prefWidth="200"/>
+            <TableColumn fx:id="statusColumn" text="Status" prefWidth="150"/>
+        </columns>
+    </TableView>
+
+</VBox>

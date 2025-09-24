@@ -4,10 +4,9 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.cruise.controller.MenuController"
+            fx:controller="org.cruises.controller.MenuController"
             stylesheets="@/styles/style.css">
 
-    <!-- Верхня панель з меню-бургером -->
     <top>
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 10; -fx-background-color: #2c3e50;">
             <children>
@@ -19,7 +18,6 @@
         </HBox>
     </top>
 
-    <!-- Лівий боковий навбар -->
     <left>
         <VBox fx:id="sideNavBar" spacing="10" visible="false" managed="false"
               styleClass="side-nav"
@@ -28,12 +26,17 @@
                 <Button text="Manage Cashier" onAction="#switchToCashierView" styleClass="nav-button"/>
                 <Button text="Manage Passenger" onAction="#switchToPassengerView" styleClass="nav-button"/>
                 <Button text="Manage Ticket" onAction="#switchToTicketView" styleClass="nav-button"/>
+                <Button text="Manage Cruise" onAction="#switchToCruiseView" styleClass="nav-button"/>
+                <Button text="Manage Ship" onAction="#switchToShipView" styleClass="nav-button"/>
+                <Button text="Manage Route" onAction="#switchToRouteView" styleClass="nav-button"/>
+                <Button text="Manage Stateroom" onAction="#switchToStateroomView" styleClass="nav-button"/>
+                <Button text="Manage Orders" onAction="#switchToOrdersView" styleClass="nav-button"/>
+                <Button text="Make Ticket" onAction="#switchToMakeOrderView" styleClass="nav-button"/>
                 <Button text="System Requests" onAction="#showAllRequest" styleClass="nav-button"/>
             </children>
         </VBox>
     </left>
 
-    <!-- Центральний контент -->
     <center>
         <StackPane fx:id="dynamicContent" style="-fx-padding: 10;">
         </StackPane>

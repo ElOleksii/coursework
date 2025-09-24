@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.cruises.controller.ship.ShipController"
+      spacing="10" alignment="TOP_LEFT" prefWidth="800">
+
+    <Label text="Ship Management" style="-fx-font-size: 24px;" />
+
+
+    <GridPane hgap="10" vgap="10" alignment="TOP_LEFT">
+
+        <Label text="Ship Name:"
+               GridPane.rowIndex="0" GridPane.columnIndex="0"
+               style="-fx-font-size: 16px; -fx-text-fill: #34495e;" />
+        <TextField fx:id="nameField"
+                   GridPane.rowIndex="0" GridPane.columnIndex="1"
+                   style="-fx-pref-width: 300;"
+        promptText="Enter Ship Name"/>
+
+
+        <Label text="Stateroom Count:"
+               GridPane.rowIndex="2" GridPane.columnIndex="0"
+               style="-fx-font-size: 16px; -fx-text-fill: #34495e;" />
+        <TextField fx:id="stateroomCountField"
+                   GridPane.rowIndex="2" GridPane.columnIndex="1"
+                   style="-fx-pref-width: 300;"
+                   promptText="Set Stateroom Count"/>
+
+    </GridPane>
+
+    <HBox spacing="20" alignment="TOP_LEFT">
+        <Button fx:id="addShipButton" text="Add Ship" onAction="#addShip"
+                style="-fx-font-size: 16px; -fx-background-color: #3498db; -fx-text-fill: white; -fx-padding: 8 16 8 16; -fx-background-radius: 8;" />
+        <Button fx:id="cancelEditButton" text="Cancel Edit" onAction="#cancelEdit" visible="false" style="-fx-font-size: 16px;" />
+    </HBox>
+
+    <TableView fx:id="shipTable" prefHeight="400" prefWidth="760"
+               style="-fx-border-color: #bdc3c7; -fx-border-width: 1;">
+        <columns>
+            <TableColumn text="Ship ID" fx:id="shipIdCol" />
+            <TableColumn text="Name" fx:id="nameCol" />
+            <TableColumn text="Stateroom Count" fx:id="stateroomCountCol" />
+        </columns>
+    </TableView>
+</VBox>
